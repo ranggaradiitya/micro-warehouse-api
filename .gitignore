@@ -1,0 +1,7 @@
+/user-service/.env
+/product-service/.env
+/warehouse-service/.env
+/transaction-service/.env
+/notification-service/.env
+/api-gateway/.env
+/merchant-service/.env
