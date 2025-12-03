@@ -1,23 +1,23 @@
 # Warehouse & Point of Sales - Microservices API
 
-Sistem manajemen warehouse dan point of sales berbasis microservices architecture menggunakan Golang, PostgreSQL, Redis, dan RabbitMQ.
+Warehouse and point of sales management system based on microservices architecture using Golang, PostgreSQL, Redis, and RabbitMQ.
 
-## 📋 Daftar Isi
+## 📋 Table of Contents
 
--   [Arsitektur](#arsitektur)
+-   [Architecture](#architecture)
 -   [Tech Stack](#tech-stack)
 -   [Microservices](#microservices)
 -   [Prerequisites](#prerequisites)
--   [Instalasi](#instalasi)
--   [Konfigurasi](#konfigurasi)
--   [Menjalankan Aplikasi](#menjalankan-aplikasi)
+-   [Installation](#installation)
+-   [Configuration](#configuration)
+-   [Running the Application](#running-the-application)
 -   [API Endpoints](#api-endpoints)
 -   [Database Schema](#database-schema)
 -   [Monitoring](#monitoring)
 
-## 🏗️ Arsitektur
+## 🏗️ Architecture
 
-Proyek ini menggunakan arsitektur microservices dengan komponen utama:
+This project uses microservices architecture with the following main components:
 
 ```
 ┌─────────────────┐
@@ -48,8 +48,8 @@ Proyek ini menggunakan arsitektur microservices dengan komponen utama:
 
 -   **Go** 1.21+ - Programming Language
 -   **Fiber** v2 - Web Framework
--   **GORM** - ORM untuk database
--   **PostgreSQL** - Database untuk setiap service
+-   **GORM** - ORM for database
+-   **PostgreSQL** - Database for each service
 -   **Redis** - Caching & Rate Limiting
 -   **RabbitMQ** - Message Queue
 -   **JWT** - Authentication & Authorization
@@ -66,14 +66,14 @@ Proyek ini menggunakan arsitektur microservices dengan komponen utama:
 
 ### 1. API Gateway (Port 8080)
 
-**Fungsi:**
+**Functions:**
 
--   Entry point untuk semua request
+-   Entry point for all requests
 -   Authentication & Authorization
--   Rate Limiting dengan Redis
--   Request routing ke service yang tepat
+-   Rate Limiting with Redis
+-   Request routing to appropriate service
 
-**Fitur:**
+**Features:**
 
 -   JWT Token Validation
 -   Redis-based Rate Limiter
@@ -82,12 +82,12 @@ Proyek ini menggunakan arsitektur microservices dengan komponen utama:
 
 ### 2. User Service (Port 8081)
 
-**Fungsi:**
+**Functions:**
 
--   Manajemen user (CRUD)
+-   User management (CRUD)
 -   Authentication (Login)
 -   Role Management
--   Assign Role ke User
+-   Assign Role to User
 
 **Database:** `warehouse_user_db` (Port 5432)
 
@@ -100,11 +100,11 @@ Proyek ini menggunakan arsitektur microservices dengan komponen utama:
 
 ### 3. Product Service (Port 8082)
 
-**Fungsi:**
+**Functions:**
 
--   Manajemen produk (CRUD)
--   Manajemen kategori produk
--   Upload gambar produk
+-   Product management (CRUD)
+-   Product category management
+-   Product image upload
 
 **Database:** `warehouse_product_db` (Port 5433)
 
@@ -116,11 +116,11 @@ Proyek ini menggunakan arsitektur microservices dengan komponen utama:
 
 ### 4. Warehouse Service (Port 8083)
 
-**Fungsi:**
+**Functions:**
 
--   Manajemen warehouse
--   Manajemen stok produk di warehouse
--   Transfer stok antar warehouse
+-   Warehouse management
+-   Product stock management in warehouse
+-   Stock transfer between warehouses
 
 **Database:** `warehouse_warehouse_db` (Port 5437)
 
@@ -132,11 +132,11 @@ Proyek ini menggunakan arsitektur microservices dengan komponen utama:
 
 ### 5. Merchant Service (Port 8084)
 
-**Fungsi:**
+**Functions:**
 
--   Manajemen merchant/toko
--   Manajemen produk merchant
--   Integrasi dengan warehouse
+-   Merchant/store management
+-   Merchant product management
+-   Integration with warehouse
 
 **Database:** `warehouse_merchant_db` (Port 5435)
 
@@ -148,10 +148,10 @@ Proyek ini menggunakan arsitektur microservices dengan komponen utama:
 
 ### 6. Transaction Service (Port 8085)
 
-**Fungsi:**
+**Functions:**
 
--   Manajemen transaksi penjualan
--   Integrasi pembayaran (Midtrans)
+-   Sales transaction management
+-   Payment integration (Midtrans)
 -   Dashboard & reporting
 
 **Database:** `warehouse_transaction_db` (Port 5434)
@@ -164,25 +164,25 @@ Proyek ini menggunakan arsitektur microservices dengan komponen utama:
 
 ### 7. Notification Service (Port 8086)
 
-**Fungsi:**
+**Functions:**
 
--   Pengiriman email notification
--   RabbitMQ consumer untuk async notification
+-   Email notification sending
+-   RabbitMQ consumer for async notification
 
 **Database:** `warehouse_notification_db` (Port 5436)
 
 ## 📦 Prerequisites
 
-Pastikan tools berikut sudah terinstall:
+Make sure the following tools are installed:
 
--   **Go** 1.21 atau lebih tinggi
+-   **Go** 1.21 or higher
 -   **Docker** & **Docker Compose**
--   **PostgreSQL** (jika run tanpa Docker)
--   **Redis** (jika run tanpa Docker)
--   **RabbitMQ** (jika run tanpa Docker)
+-   **PostgreSQL** (if running without Docker)
+-   **Redis** (if running without Docker)
+-   **RabbitMQ** (if running without Docker)
 -   **Git**
 
-## 🚀 Instalasi
+## 🚀 Installation
 
 ### 1. Clone Repository
 
@@ -193,7 +193,7 @@ cd micro-warehouse-api-main
 
 ### 2. Setup Environment Variables
 
-Setiap service memiliki file `env.example`. Copy dan rename menjadi `.env`:
+Each service has an `env.example` file. Copy and rename to `.env`:
 
 ```bash
 # API Gateway
@@ -218,9 +218,9 @@ cp transaction-service/env.example transaction-service/.env
 cp notification-service/env.example notification-service/.env
 ```
 
-### 3. Konfigurasi Environment Variables
+### 3. Configure Environment Variables
 
-Edit file `.env` di setiap service sesuai kebutuhan. Contoh konfigurasi untuk `merchant-service/.env`:
+Edit the `.env` file in each service as needed. Example configuration for `merchant-service/.env`:
 
 ```env
 APP_ENV=development
@@ -249,34 +249,34 @@ SUPABASE_BUCKET=your-bucket-name
 URL_API_GATEWAY=http://localhost:8080
 ```
 
-## 🏃 Menjalankan Aplikasi
+## 🏃 Running the Application
 
-### Menggunakan Docker Compose (Recommended)
+### Using Docker Compose (Recommended)
 
 ```bash
-# Build dan jalankan semua services
+# Build and run all services
 docker-compose up -d --build
 
-# Lihat logs
+# View logs
 docker-compose logs -f
 
-# Stop semua services
+# Stop all services
 docker-compose down
 
-# Stop dan hapus volumes (reset database)
+# Stop and remove volumes (reset database)
 docker-compose down -v
 ```
 
-### Menjalankan Service Individual
+### Running Individual Service
 
 ```bash
-# Masuk ke direktori service
+# Navigate to service directory
 cd user-service
 
 # Install dependencies
 go mod download
 
-# Jalankan service
+# Run service
 go run main.go start
 ```
 
@@ -336,7 +336,7 @@ Response:
 
 ### Protected Endpoints
 
-Semua endpoint selain `/health` dan `/api/v1/auth/login` memerlukan JWT token:
+All endpoints except `/health` and `/api/v1/auth/login` require a JWT token:
 
 ```bash
 # Example: Get All Products
@@ -346,7 +346,7 @@ Authorization: Bearer <your-jwt-token>
 
 ## 🗄️ Database Schema
 
-Setiap service memiliki database terpisah:
+Each service has a separate database:
 
 | Database Name             | Port | Service              |
 | ------------------------- | ---- | -------------------- |
@@ -369,11 +369,11 @@ Password: guest
 
 ### Database Connections
 
-Gunakan tool seperti DBeaver, pgAdmin, atau TablePlus:
+Use tools like DBeaver, pgAdmin, or TablePlus:
 
 ```
 Host: localhost
-Port: 5432-5437 (sesuai service)
+Port: 5432-5437 (depending on service)
 Username: postgres
 Password: lokal
 ```
@@ -386,20 +386,20 @@ docker exec -it warehouse_redis redis-cli
 
 ## 🔒 Security Features
 
--   **JWT Authentication** - Semua endpoint protected
--   **Rate Limiting** - Redis-based rate limiter di API Gateway
--   **CORS** - Configured untuk cross-origin requests
--   **Request Validation** - Input validation di setiap service
--   **Internal Request Headers** - Komunikasi antar service diamankan
+-   **JWT Authentication** - All endpoints are protected
+-   **Rate Limiting** - Redis-based rate limiter in API Gateway
+-   **CORS** - Configured for cross-origin requests
+-   **Request Validation** - Input validation in each service
+-   **Internal Request Headers** - Inter-service communication is secured
 
 ## 📝 Development
 
-### Menambah Service Baru
+### Adding a New Service
 
-1. Buat folder service baru
-2. Setup struktur folder (app, cmd, configs, controller, dll)
-3. Tambahkan konfigurasi di `docker-compose.yml`
-4. Tambahkan routing di `api-gateway`
+1. Create a new service folder
+2. Setup folder structure (app, cmd, configs, controller, etc.)
+3. Add configuration in `docker-compose.yml`
+4. Add routing in `api-gateway`
 
 ### Testing
 
@@ -412,20 +412,20 @@ go test ./...
 go test -tags=integration ./...
 ```
 
-### Build Production
+### Production Build
 
 ```bash
 # Build single service
 cd <service-name>
 go build -o bin/app main.go
 
-# Build dengan Docker
+# Build with Docker
 docker build -t <service-name>:latest .
 ```
 
 ## 🐛 Troubleshooting
 
-### Service tidak bisa connect ke database
+### Service cannot connect to database
 
 ```bash
 # Check database health
@@ -435,13 +435,13 @@ docker-compose ps
 docker-compose restart postgres-<service>
 ```
 
-### Port sudah digunakan
+### Port already in use
 
-Edit `docker-compose.yml` dan ubah port mapping:
+Edit `docker-compose.yml` and change the port mapping:
 
 ```yaml
 ports:
-    - "8081:8081" # Ubah port kiri (host)
+    - "8081:8081" # Change the left port (host)
 ```
 
 ### Redis connection error
@@ -460,7 +460,7 @@ docker-compose logs redis
 
 ## 📧 Contact
 
-Untuk pertanyaan atau dukungan, hubungi adityarangga990@gmail.com
+For questions or support, contact adityarangga990@gmail.com
 
 ---
 
