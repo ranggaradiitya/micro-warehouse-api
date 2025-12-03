@@ -456,7 +456,7 @@ docker-compose logs redis
 
 ## 📄 License
 
-MIT License
+[MIT License](LICENSE)
 
 ## 📧 Contact
 
